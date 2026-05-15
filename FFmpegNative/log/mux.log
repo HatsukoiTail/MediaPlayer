@@ -1,0 +1,120 @@
+[20:53:23 125] === Logger started ===
+[20:53:23 276] Muxer thread started, 2 streams
+[20:53:23 276] mux pre-rescale #0: stream=0, PTS=-1024, DTS=-1024, pkt_tb=1/48000, out_tb=1/48000
+[20:53:23 276] mux post-rescale #0: stream=0, PTS=-1024, DTS=-1024, tb=1/48000
+[20:53:23 276] mux pre-rescale #1: stream=0, PTS=0, DTS=0, pkt_tb=1/48000, out_tb=1/48000
+[20:53:23 276] mux post-rescale #1: stream=0, PTS=0, DTS=0, tb=1/48000
+[20:53:23 276] mux pre-rescale #2: stream=0, PTS=1024, DTS=1024, pkt_tb=1/48000, out_tb=1/48000
+[20:53:23 276] mux post-rescale #2: stream=0, PTS=1024, DTS=1024, tb=1/48000
+[20:53:23 277] mux pre-rescale #100: stream=0, PTS=101376, DTS=101376, pkt_tb=1/48000, out_tb=1/48000
+[20:53:23 277] mux post-rescale #100: stream=0, PTS=101376, DTS=101376, tb=1/48000
+[20:53:23 277] mux pre-rescale #200: stream=0, PTS=203776, DTS=203776, pkt_tb=1/48000, out_tb=1/48000
+[20:53:23 277] mux post-rescale #200: stream=0, PTS=203776, DTS=203776, tb=1/48000
+[20:53:23 310] mux pre-rescale #300: stream=0, PTS=306176, DTS=306176, pkt_tb=1/48000, out_tb=1/48000
+[20:53:23 310] mux post-rescale #300: stream=0, PTS=306176, DTS=306176, tb=1/48000
+[20:53:23 310] mux pre-rescale #0: stream=1, PTS=0, DTS=-11250, pkt_tb=1/90000, out_tb=1/90000
+[20:53:23 310] mux post-rescale #0: stream=1, PTS=0, DTS=-11250, tb=1/90000
+[20:53:23 310] mux pre-rescale #1: stream=1, PTS=15030, DTS=-7500, pkt_tb=1/90000, out_tb=1/90000
+[20:53:23 310] mux post-rescale #1: stream=1, PTS=15030, DTS=-7500, tb=1/90000
+[20:53:23 310] mux pre-rescale #2: stream=1, PTS=7470, DTS=-3750, pkt_tb=1/90000, out_tb=1/90000
+[20:53:23 310] mux post-rescale #2: stream=1, PTS=7470, DTS=-3750, tb=1/90000
+[20:53:23 436] mux pre-rescale #400: stream=0, PTS=408576, DTS=408576, pkt_tb=1/48000, out_tb=1/48000
+[20:53:23 436] mux post-rescale #400: stream=0, PTS=408576, DTS=408576, tb=1/48000
+[20:53:23 468] mux pre-rescale #100: stream=1, PTS=371610, DTS=364140, pkt_tb=1/90000, out_tb=1/90000
+[20:53:23 468] mux post-rescale #100: stream=1, PTS=371610, DTS=364140, tb=1/90000
+[20:53:23 500] mux pre-rescale #500: stream=0, PTS=510976, DTS=510976, pkt_tb=1/48000, out_tb=1/48000
+[20:53:23 500] mux post-rescale #500: stream=0, PTS=510976, DTS=510976, tb=1/48000
+[20:53:23 548] mux pre-rescale #600: stream=0, PTS=613376, DTS=613376, pkt_tb=1/48000, out_tb=1/48000
+[20:53:23 548] mux post-rescale #600: stream=0, PTS=613376, DTS=613376, tb=1/48000
+[20:53:23 578] mux pre-rescale #700: stream=0, PTS=715776, DTS=715776, pkt_tb=1/48000, out_tb=1/48000
+[20:53:23 578] mux post-rescale #700: stream=0, PTS=715776, DTS=715776, tb=1/48000
+[20:53:23 610] mux pre-rescale #200: stream=1, PTS=747000, DTS=739530, pkt_tb=1/90000, out_tb=1/90000
+[20:53:23 610] mux post-rescale #200: stream=1, PTS=747000, DTS=739530, tb=1/90000
+[20:53:23 625] mux pre-rescale #800: stream=0, PTS=818176, DTS=818176, pkt_tb=1/48000, out_tb=1/48000
+[20:53:23 625] mux post-rescale #800: stream=0, PTS=818176, DTS=818176, tb=1/48000
+[20:53:23 673] mux pre-rescale #900: stream=0, PTS=920576, DTS=920576, pkt_tb=1/48000, out_tb=1/48000
+[20:53:23 673] mux post-rescale #900: stream=0, PTS=920576, DTS=920576, tb=1/48000
+[20:53:23 721] mux pre-rescale #1000: stream=0, PTS=1022976, DTS=1022976, pkt_tb=1/48000, out_tb=1/48000
+[20:53:23 721] mux post-rescale #1000: stream=0, PTS=1022976, DTS=1022976, tb=1/48000
+[20:53:23 737] mux pre-rescale #300: stream=1, PTS=1126170, DTS=1114830, pkt_tb=1/90000, out_tb=1/90000
+[20:53:23 737] mux post-rescale #300: stream=1, PTS=1126170, DTS=1114830, tb=1/90000
+[20:53:23 783] mux pre-rescale #1100: stream=0, PTS=1125376, DTS=1125376, pkt_tb=1/48000, out_tb=1/48000
+[20:53:23 783] mux post-rescale #1100: stream=0, PTS=1125376, DTS=1125376, tb=1/48000
+[20:53:23 845] mux pre-rescale #1200: stream=0, PTS=1227776, DTS=1227776, pkt_tb=1/48000, out_tb=1/48000
+[20:53:23 845] mux post-rescale #1200: stream=0, PTS=1227776, DTS=1227776, tb=1/48000
+[20:53:23 861] mux pre-rescale #400: stream=1, PTS=1497780, DTS=1490220, pkt_tb=1/90000, out_tb=1/90000
+[20:53:23 861] mux post-rescale #400: stream=1, PTS=1497780, DTS=1490220, tb=1/90000
+[20:53:23 877] mux pre-rescale #1300: stream=0, PTS=1330176, DTS=1330176, pkt_tb=1/48000, out_tb=1/48000
+[20:53:23 877] mux post-rescale #1300: stream=0, PTS=1330176, DTS=1330176, tb=1/48000
+[20:53:23 924] mux pre-rescale #1400: stream=0, PTS=1432576, DTS=1432576, pkt_tb=1/48000, out_tb=1/48000
+[20:53:23 924] mux post-rescale #1400: stream=0, PTS=1432576, DTS=1432576, tb=1/48000
+[20:53:23 971] mux pre-rescale #500: stream=1, PTS=1876860, DTS=1865610, pkt_tb=1/90000, out_tb=1/90000
+[20:53:23 971] mux post-rescale #500: stream=1, PTS=1876860, DTS=1865610, tb=1/90000
+[20:53:23 987] mux pre-rescale #1500: stream=0, PTS=1534976, DTS=1534976, pkt_tb=1/48000, out_tb=1/48000
+[20:53:23 987] mux post-rescale #1500: stream=0, PTS=1534976, DTS=1534976, tb=1/48000
+[20:53:24 035] mux pre-rescale #1600: stream=0, PTS=1637376, DTS=1637376, pkt_tb=1/48000, out_tb=1/48000
+[20:53:24 035] mux post-rescale #1600: stream=0, PTS=1637376, DTS=1637376, tb=1/48000
+[20:53:24 098] mux pre-rescale #600: stream=1, PTS=2248470, DTS=2241000, pkt_tb=1/90000, out_tb=1/90000
+[20:53:24 098] mux post-rescale #600: stream=1, PTS=2248470, DTS=2241000, tb=1/90000
+[20:53:24 114] mux pre-rescale #1700: stream=0, PTS=1739776, DTS=1739776, pkt_tb=1/48000, out_tb=1/48000
+[20:53:24 114] mux post-rescale #1700: stream=0, PTS=1739776, DTS=1739776, tb=1/48000
+[20:53:24 192] mux pre-rescale #1800: stream=0, PTS=1842176, DTS=1842176, pkt_tb=1/48000, out_tb=1/48000
+[20:53:24 192] mux post-rescale #1800: stream=0, PTS=1842176, DTS=1842176, tb=1/48000
+[20:53:24 208] mux pre-rescale #700: stream=1, PTS=2623860, DTS=2616390, pkt_tb=1/90000, out_tb=1/90000
+[20:53:24 208] mux post-rescale #700: stream=1, PTS=2623860, DTS=2616390, tb=1/90000
+[20:53:24 285] mux pre-rescale #1900: stream=0, PTS=1944576, DTS=1944576, pkt_tb=1/48000, out_tb=1/48000
+[20:53:24 285] mux post-rescale #1900: stream=0, PTS=1944576, DTS=1944576, tb=1/48000
+[20:53:24 332] mux pre-rescale #800: stream=1, PTS=3003030, DTS=2991780, pkt_tb=1/90000, out_tb=1/90000
+[20:53:24 333] mux post-rescale #800: stream=1, PTS=3003030, DTS=2991780, tb=1/90000
+[20:53:24 364] mux pre-rescale #2000: stream=0, PTS=2046976, DTS=2046976, pkt_tb=1/48000, out_tb=1/48000
+[20:53:24 364] mux post-rescale #2000: stream=0, PTS=2046976, DTS=2046976, tb=1/48000
+[20:53:24 410] mux pre-rescale #2100: stream=0, PTS=2149376, DTS=2149376, pkt_tb=1/48000, out_tb=1/48000
+[20:53:24 410] mux post-rescale #2100: stream=0, PTS=2149376, DTS=2149376, tb=1/48000
+[20:53:24 457] mux pre-rescale #900: stream=1, PTS=3374640, DTS=3367080, pkt_tb=1/90000, out_tb=1/90000
+[20:53:24 457] mux post-rescale #900: stream=1, PTS=3374640, DTS=3367080, tb=1/90000
+[20:53:24 473] mux pre-rescale #2200: stream=0, PTS=2251776, DTS=2251776, pkt_tb=1/48000, out_tb=1/48000
+[20:53:24 473] mux post-rescale #2200: stream=0, PTS=2251776, DTS=2251776, tb=1/48000
+[20:53:24 504] mux pre-rescale #2300: stream=0, PTS=2354176, DTS=2354176, pkt_tb=1/48000, out_tb=1/48000
+[20:53:24 504] mux post-rescale #2300: stream=0, PTS=2354176, DTS=2354176, tb=1/48000
+[20:53:24 566] mux pre-rescale #2400: stream=0, PTS=2456576, DTS=2456576, pkt_tb=1/48000, out_tb=1/48000
+[20:53:24 566] mux post-rescale #2400: stream=0, PTS=2456576, DTS=2456576, tb=1/48000
+[20:53:24 566] mux pre-rescale #1000: stream=1, PTS=3753720, DTS=3742470, pkt_tb=1/90000, out_tb=1/90000
+[20:53:24 566] mux post-rescale #1000: stream=1, PTS=3753720, DTS=3742470, tb=1/90000
+[20:53:24 597] mux pre-rescale #2500: stream=0, PTS=2558976, DTS=2558976, pkt_tb=1/48000, out_tb=1/48000
+[20:53:24 597] mux post-rescale #2500: stream=0, PTS=2558976, DTS=2558976, tb=1/48000
+[20:53:24 645] mux pre-rescale #2600: stream=0, PTS=2661376, DTS=2661376, pkt_tb=1/48000, out_tb=1/48000
+[20:53:24 645] mux post-rescale #2600: stream=0, PTS=2661376, DTS=2661376, tb=1/48000
+[20:53:24 677] mux pre-rescale #2700: stream=0, PTS=2763776, DTS=2763776, pkt_tb=1/48000, out_tb=1/48000
+[20:53:24 677] mux post-rescale #2700: stream=0, PTS=2763776, DTS=2763776, tb=1/48000
+[20:53:24 693] mux pre-rescale #1100: stream=1, PTS=4125330, DTS=4117860, pkt_tb=1/90000, out_tb=1/90000
+[20:53:24 693] mux post-rescale #1100: stream=1, PTS=4125330, DTS=4117860, tb=1/90000
+[20:53:24 723] mux pre-rescale #2800: stream=0, PTS=2866176, DTS=2866176, pkt_tb=1/48000, out_tb=1/48000
+[20:53:24 723] mux post-rescale #2800: stream=0, PTS=2866176, DTS=2866176, tb=1/48000
+[20:53:24 770] mux pre-rescale #2900: stream=0, PTS=2968576, DTS=2968576, pkt_tb=1/48000, out_tb=1/48000
+[20:53:24 770] mux post-rescale #2900: stream=0, PTS=2968576, DTS=2968576, tb=1/48000
+[20:53:24 816] mux pre-rescale #1200: stream=1, PTS=4500720, DTS=4493250, pkt_tb=1/90000, out_tb=1/90000
+[20:53:24 816] mux post-rescale #1200: stream=1, PTS=4500720, DTS=4493250, tb=1/90000
+[20:53:24 927] mux pre-rescale #1300: stream=1, PTS=4879890, DTS=4868640, pkt_tb=1/90000, out_tb=1/90000
+[20:53:24 927] mux post-rescale #1300: stream=1, PTS=4879890, DTS=4868640, tb=1/90000
+[20:53:24 942] mux pre-rescale #3000: stream=0, PTS=3070976, DTS=3070976, pkt_tb=1/48000, out_tb=1/48000
+[20:53:24 942] mux post-rescale #3000: stream=0, PTS=3070976, DTS=3070976, tb=1/48000
+[20:53:25 053] mux pre-rescale #1400: stream=1, PTS=5251500, DTS=5244030, pkt_tb=1/90000, out_tb=1/90000
+[20:53:25 053] mux post-rescale #1400: stream=1, PTS=5251500, DTS=5244030, tb=1/90000
+[20:53:25 149] mux pre-rescale #3100: stream=0, PTS=3173376, DTS=3173376, pkt_tb=1/48000, out_tb=1/48000
+[20:53:25 149] mux post-rescale #3100: stream=0, PTS=3173376, DTS=3173376, tb=1/48000
+[20:53:25 180] mux pre-rescale #3200: stream=0, PTS=3275776, DTS=3275776, pkt_tb=1/48000, out_tb=1/48000
+[20:53:25 180] mux post-rescale #3200: stream=0, PTS=3275776, DTS=3275776, tb=1/48000
+[20:53:25 180] mux pre-rescale #1500: stream=1, PTS=5630670, DTS=5619330, pkt_tb=1/90000, out_tb=1/90000
+[20:53:25 180] mux post-rescale #1500: stream=1, PTS=5630670, DTS=5619330, tb=1/90000
+[20:53:25 242] mux pre-rescale #3300: stream=0, PTS=3378176, DTS=3378176, pkt_tb=1/48000, out_tb=1/48000
+[20:53:25 242] mux post-rescale #3300: stream=0, PTS=3378176, DTS=3378176, tb=1/48000
+[20:53:25 258] mux pre-rescale #3400: stream=0, PTS=3480576, DTS=3480576, pkt_tb=1/48000, out_tb=1/48000
+[20:53:25 258] mux post-rescale #3400: stream=0, PTS=3480576, DTS=3480576, tb=1/48000
+[20:53:25 289] mux pre-rescale #3500: stream=0, PTS=3582976, DTS=3582976, pkt_tb=1/48000, out_tb=1/48000
+[20:53:25 289] mux post-rescale #3500: stream=0, PTS=3582976, DTS=3582976, tb=1/48000
+[20:53:25 304] mux pre-rescale #1600: stream=1, PTS=6002280, DTS=5994720, pkt_tb=1/90000, out_tb=1/90000
+[20:53:25 304] mux post-rescale #1600: stream=1, PTS=6002280, DTS=5994720, tb=1/90000
+[20:53:25 430] mux pre-rescale #1700: stream=1, PTS=6377580, DTS=6370110, pkt_tb=1/90000, out_tb=1/90000
+[20:53:25 430] mux post-rescale #1700: stream=1, PTS=6377580, DTS=6370110, tb=1/90000
+[20:53:25 526] Muxer thread exiting, 5304 packets written
+[20:53:28 280] === Logger stopped ===

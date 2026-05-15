@@ -1,0 +1,8 @@
+{
+    "cmake.configureArgs": [
+        "-DCMAKE_C_COMPILER=D:/Work/Qt/Tools/mingw1310_64/bin/gcc.exe",
+        "-DCMAKE_CXX_COMPILER=D:/Work/Qt/Tools/mingw1310_64/bin/g++.exe"
+    ],
+    "cmake.generator": "MinGW Makefiles",
+    "cmake.buildDirectory": "${workspaceFolder}/build"
+}

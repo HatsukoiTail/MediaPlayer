@@ -1,0 +1,84 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:AvaloniaMedia.ViewModels"
+        xmlns:converters="clr-namespace:AvaloniaMedia.Converters"
+        x:Class="AvaloniaMedia.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="AvaloniaMedia" 
+        Width="900" Height="640"
+        MinWidth="600" MinHeight="400">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <Window.Resources>
+        <converters:InverseTypeVisibilityConverter x:Key="InverseTypeVisibilityConverter" />
+    </Window.Resources>
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- ===== Navigation Bar ===== -->
+        <Border Grid.Row="0" Background="#101018" Padding="8,0" BorderBrush="#20FFFFFF" BorderThickness="0,0,0,1"
+                IsVisible="{Binding Page, Converter={StaticResource InverseTypeVisibilityConverter},
+                ConverterParameter='MediaPlayerViewModel | ImageViewerViewModel'}">
+            <Grid ColumnDefinitions="Auto,Auto,*,Auto">
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="0">
+                    <Button Content="文件" Classes="NavTab" Command="{Binding ShowLibrary}" />
+                    <Button Content="转码" Classes="NavTab" Command="{Binding ShowTranscoding}" />
+                </StackPanel>
+                <Button Grid.Column="3" Content="📂 Open File" Classes="NavOpenBtn" Command="{Binding OpenFile}" />
+            </Grid>
+        </Border>
+
+        <!-- ===== Content Area ===== -->
+        <Grid Grid.Row="1">
+            <ContentControl Content="{Binding Page}" />
+        </Grid>
+    </Grid>
+
+    <Window.Styles>
+        <!-- Nav Tab -->
+        <Style Selector="Button.NavTab">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="#80FFFFFF" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Padding" Value="16,8" />
+            <Setter Property="BorderThickness" Value="0,0,0,2" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+        <Style Selector="Button.NavTab:pointerover">
+            <Setter Property="Foreground" Value="#D0D0D0" />
+            <Setter Property="Background" Value="#0AFFFFFF" />
+        </Style>
+
+        <!-- Open File Button -->
+        <Style Selector="Button.NavOpenBtn">
+            <Setter Property="Background" Value="#18FFFFFF" />
+            <Setter Property="Foreground" Value="#D0D0D0" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Padding" Value="14,6" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+        <Style Selector="Button.NavOpenBtn:pointerover">
+            <Setter Property="Background" Value="#28FFFFFF" />
+        </Style>
+
+        <!-- Back Button -->
+        <Style Selector="Button.BackBtn">
+            <Setter Property="Background" Value="#18FFFFFF" />
+            <Setter Property="Foreground" Value="#D0D0D0" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Padding" Value="14,6" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+        <Style Selector="Button.BackBtn:pointerover">
+            <Setter Property="Background" Value="#28FFFFFF" />
+        </Style>
+    </Window.Styles>
+</Window>

@@ -1,0 +1,342 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:AvaloniaMedia.ViewModels"
+             x:Class="AvaloniaMedia.Views.MediaTranscoding"
+             x:DataType="vm:MediaTranscodingViewModel"
+             Focusable="True">
+
+    <UserControl.DataContext>
+            <vm:MediaTranscodingViewModel />
+    </UserControl.DataContext>
+
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" MaxWidth="800" Margin="24,16">
+
+            <!-- ===== Header ===== -->
+            <TextBlock Grid.Row="0" Text="Media Transcoding" FontSize="24" FontWeight="Bold"
+                       Foreground="White" Margin="0,0,0,20" />
+
+            <!-- ===== Input Section ===== -->
+            <Border Grid.Row="1" Classes="SectionCard" Margin="0,0,0,12">
+                <StackPanel Spacing="10" Margin="16">
+                    <TextBlock Text="Input / Output" FontSize="16" FontWeight="SemiBold" Foreground="#CCFFFFFF" />
+                    <Grid ColumnDefinitions="*,Auto,Auto" Margin="0,4,0,0">
+                        <TextBox Grid.Column="0" Text="{Binding InputPath}" PlaceholderText="Input file path..."
+                                 IsReadOnly="True" Classes="DarkInput" />
+                        <Button Grid.Column="1" Content="Browse..." Classes="AccentButton"
+                                Command="{Binding SelectInputFile}" Margin="8,0,0,0" />
+                        <Button Grid.Column="2" Content="Output..." Classes="AccentButton"
+                                Command="{Binding SelectOutputFile}" Margin="8,0,0,0" />
+                    </Grid>
+                    <TextBox Text="{Binding InputInfo}" IsReadOnly="True" Classes="InfoBox"
+                             Height="80" AcceptsReturn="True" />
+                    <Grid ColumnDefinitions="Auto,*,Auto,Auto" Margin="0,4">
+                        <TextBlock Grid.Column="0" Text="Output Path:" VerticalAlignment="Center"
+                                   Foreground="#A0A0A0" Margin="0,0,12,0" />
+                        <TextBox Grid.Column="1" Text="{Binding OutputPath}" PlaceholderText="Output path..."
+                                 Classes="DarkInput" />
+                        <TextBlock Grid.Column="2" Text="Format:" VerticalAlignment="Center"
+                                   Foreground="#A0A0A0" Margin="16,0,8,0" />
+                        <ComboBox Grid.Column="3" ItemsSource="{Binding OutputFormats}"
+                                  SelectedItem="{Binding OutputFormat}" Width="80" Classes="DarkCombo" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- ===== Video Section ===== -->
+            <Border Grid.Row="2" Classes="SectionCard" Margin="0,0,0,12">
+                <StackPanel Spacing="8" Margin="16">
+                    <Grid ColumnDefinitions="Auto,*,Auto">
+                        <ToggleSwitch Grid.Column="0" IsChecked="{Binding ReEncodeVideo}"
+                                      OnContent="Re-encode Video" OffContent="Copy (remux)"
+                                      Classes="DarkToggle" />
+                        <TextBlock Grid.Column="2" Text="Video Settings" FontSize="16"
+                                   FontWeight="SemiBold" Foreground="#CCFFFFFF" />
+                    </Grid>
+
+                    <Border IsVisible="{Binding ReEncodeVideo}" Classes="NestedCard">
+                        <Grid ColumnDefinitions="*,12,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto"
+                              Margin="12" ColumnSpacing="12" RowSpacing="8">
+
+                            <StackPanel Grid.Row="0" Grid.Column="0">
+                                <TextBlock Text="Codec" Foreground="#A0A0A0" />
+                                <ComboBox ItemsSource="{Binding VideoCodecs}"
+                                          SelectedItem="{Binding VideoCodec}" Classes="DarkCombo" />
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="2">
+                                <TextBlock Text="Pixel Format" Foreground="#A0A0A0" />
+                                <ComboBox ItemsSource="{Binding PixelFormats}"
+                                          SelectedItem="{Binding PixelFormat}" Classes="DarkCombo" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="1" Grid.Column="0">
+                                <Grid ColumnDefinitions="Auto,Auto" ColumnSpacing="6">
+                                    <TextBlock Grid.Column="0" Text="Width" Foreground="#A0A0A0"
+                                               VerticalAlignment="Center" />
+                                    <ToggleButton Grid.Column="1" IsChecked="{Binding AspectRatioLocked}"
+                                                  Classes="LockButton" Width="20" Height="20"
+                                                  ToolTip.Tip="Lock aspect ratio" />
+                                </Grid>
+                                <NumericUpDown Value="{Binding OutputWidth}" Minimum="64" Maximum="8192"
+                                               Classes="DarkNum" />
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="2">
+                                <TextBlock Text="Height" Foreground="#A0A0A0" />
+                                <NumericUpDown Value="{Binding OutputHeight}" Minimum="64" Maximum="8192"
+                                               Classes="DarkNum" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="2" Grid.Column="0">
+                                <TextBlock Text="Bitrate (kbps)" Foreground="#A0A0A0" />
+                                <NumericUpDown Value="{Binding VideoBitRate}" Minimum="100" Maximum="100000"
+                                               Increment="100" Classes="DarkNum" />
+                            </StackPanel>
+                            <StackPanel Grid.Row="2" Grid.Column="2">
+                                <TextBlock Text="Frame Rate" Foreground="#A0A0A0" />
+                                <NumericUpDown Value="{Binding FrameRate}" Minimum="1" Maximum="240"
+                                               Increment="1" Classes="DarkNum" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="3" Grid.Column="0">
+                                <TextBlock Text="Output Resolution" Foreground="#A0A0A0" />
+                                <TextBlock Foreground="#80FFFFFF" Margin="0,8,0,0">
+                                    <Run Text="{Binding OutputWidth}" /> x <Run Text="{Binding OutputHeight}" />
+                                    @ <Run Text="{Binding FrameRate}" /> fps
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <!-- ===== Audio Section ===== -->
+            <Border Grid.Row="3" Classes="SectionCard" Margin="0,0,0,12">
+                <StackPanel Spacing="8" Margin="16">
+                    <Grid ColumnDefinitions="Auto,*,Auto">
+                        <ToggleSwitch Grid.Column="0" IsChecked="{Binding ReEncodeAudio}"
+                                      OnContent="Re-encode Audio" OffContent="Copy (remux)"
+                                      Classes="DarkToggle" />
+                        <TextBlock Grid.Column="2" Text="Audio Settings" FontSize="16"
+                                   FontWeight="SemiBold" Foreground="#CCFFFFFF" />
+                    </Grid>
+
+                    <Border IsVisible="{Binding ReEncodeAudio}" Classes="NestedCard">
+                        <Grid ColumnDefinitions="*,12,*" RowDefinitions="Auto,Auto,Auto" Margin="12"
+                              ColumnSpacing="12" RowSpacing="8">
+                            <StackPanel Grid.Row="0" Grid.Column="0">
+                                <TextBlock Text="Codec" Foreground="#A0A0A0" />
+                                <ComboBox ItemsSource="{Binding AudioCodecs}"
+                                          SelectedItem="{Binding AudioCodec}" Classes="DarkCombo" />
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="2">
+                                <TextBlock Text="Sample Rate (Hz)" Foreground="#A0A0A0" />
+                                <NumericUpDown Value="{Binding SampleRate}" Minimum="8000" Maximum="384000"
+                                               Increment="1000" Classes="DarkNum" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="1" Grid.Column="0">
+                                <TextBlock Text="Bitrate (kbps)" Foreground="#A0A0A0" />
+                                <NumericUpDown Value="{Binding AudioBitRate}" Minimum="16" Maximum="1536"
+                                               Increment="16" Classes="DarkNum" />
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="2">
+                                <TextBlock Text="Sample Format" Foreground="#A0A0A0" />
+                                <ComboBox ItemsSource="{Binding SampleFormats}"
+                                          SelectedItem="{Binding SampleFormat}" Classes="DarkCombo" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <!-- ===== Cover / Extra Section ===== -->
+            <Border Grid.Row="4" Classes="SectionCard" Margin="0,0,0,12">
+                <StackPanel Spacing="8" Margin="16">
+                    <TextBlock Text="Cover Image (optional)" FontSize="16" FontWeight="SemiBold"
+                               Foreground="#CCFFFFFF" />
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBox Grid.Column="0" Text="{Binding CoverImagePath}" IsReadOnly="True"
+                                 PlaceholderText="Select a cover image..." Classes="DarkInput" />
+                        <Button Grid.Column="1" Content="Browse..." Classes="AccentButton"
+                                Command="{Binding SelectCoverImage}" Margin="8,0,0,0" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- ===== Action Section ===== -->
+            <Border Grid.Row="5" Classes="SectionCard">
+                <StackPanel Spacing="12" Margin="16">
+                    <!-- Progress -->
+                    <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding IsTranscoding}" Margin="0,0,0,4">
+                        <ProgressBar Grid.Column="0" Value="{Binding Progress}" Minimum="0" Maximum="100"
+                                     Height="8" Classes="DarkProgress" />
+                        <TextBlock Grid.Column="1" Text="{Binding Progress, StringFormat={}{0:F0}%}"
+                                   Foreground="#A0A0A0" Margin="12,0,0,0" VerticalAlignment="Center" />
+                    </Grid>
+
+                    <!-- Status -->
+                    <TextBlock Text="{Binding StatusText}" Foreground="#80FFFFFF" TextWrapping="Wrap" />
+
+                    <!-- Buttons -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="12">
+                        <Button Content="Cancel" Classes="SecondaryButton"
+                                IsVisible="{Binding IsTranscoding}"
+                                Command="{Binding CancelTranscode}" />
+                        <Button Content="Start Transcoding" Classes="PrimaryButton"
+                                IsVisible="{Binding !IsTranscoding}"
+                                Command="{Binding StartTranscode}" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+        </Grid>
+    </ScrollViewer>
+
+    <UserControl.Styles>
+        <!-- Section Card -->
+        <Style Selector="Border.SectionCard">
+            <Setter Property="Background" Value="#1AFFFFFF" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="BorderBrush" Value="#20FFFFFF" />
+            <Setter Property="BorderThickness" Value="1" />
+        </Style>
+
+        <!-- Nested Card -->
+        <Style Selector="Border.NestedCard">
+            <Setter Property="Background" Value="#0DFFFFFF" />
+            <Setter Property="CornerRadius" Value="6" />
+            <Setter Property="BorderBrush" Value="#15FFFFFF" />
+            <Setter Property="BorderThickness" Value="1" />
+        </Style>
+
+        <!-- Dark Input -->
+        <Style Selector="TextBox.DarkInput">
+            <Setter Property="Background" Value="#15FFFFFF" />
+            <Setter Property="Foreground" Value="#E0E0E0" />
+            <Setter Property="BorderBrush" Value="#30FFFFFF" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="Padding" Value="8,6" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="CaretBrush" Value="White" />
+        </Style>
+
+        <!-- Info Box -->
+        <Style Selector="TextBox.InfoBox">
+            <Setter Property="Background" Value="#0AFFFFFF" />
+            <Setter Property="Foreground" Value="#70FFFFFF" />
+            <Setter Property="BorderBrush" Value="#15FFFFFF" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="Padding" Value="8,6" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontFamily" Value="Consolas" />
+            <Setter Property="IsReadOnly" Value="True" />
+        </Style>
+
+        <!-- Dark ComboBox -->
+        <Style Selector="ComboBox.DarkCombo">
+            <Setter Property="Background" Value="#15FFFFFF" />
+            <Setter Property="Foreground" Value="#E0E0E0" />
+            <Setter Property="BorderBrush" Value="#30FFFFFF" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="Padding" Value="8,4" />
+            <Setter Property="FontSize" Value="13" />
+        </Style>
+
+        <!-- Dark NumericUpDown -->
+        <Style Selector="NumericUpDown.DarkNum">
+            <Setter Property="Background" Value="#15FFFFFF" />
+            <Setter Property="Foreground" Value="#E0E0E0" />
+            <Setter Property="BorderBrush" Value="#30FFFFFF" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="FontSize" Value="13" />
+        </Style>
+
+        <!-- Lock Button -->
+        <Style Selector="ToggleButton.LockButton">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="#30FFFFFF" />
+            <Setter Property="CornerRadius" Value="3" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="FontSize" Value="10" />
+            <Setter Property="Padding" Value="2" />
+        </Style>
+        <Style Selector="ToggleButton.LockButton:checked">
+            <Setter Property="Content" Value="🔒" />
+            <Setter Property="Background" Value="#15FFFFFF" />
+        </Style>
+        <Style Selector="ToggleButton.LockButton:unchecked">
+            <Setter Property="Content" Value="🔓" />
+            <Setter Property="Background" Value="#0AFFFFFF" />
+        </Style>
+
+        <!-- Dark Toggle -->
+        <Style Selector="ToggleSwitch.DarkToggle">
+            <Setter Property="Foreground" Value="#D0D0D0" />
+            <Setter Property="FontSize" Value="13" />
+        </Style>
+
+        <!-- Dark Progress -->
+        <Style Selector="ProgressBar.DarkProgress">
+            <Setter Property="Foreground" Value="#FF3B82F6" />
+            <Setter Property="Background" Value="#1AFFFFFF" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="CornerRadius" Value="4" />
+        </Style>
+
+        <!-- Primary Button -->
+        <Style Selector="Button.PrimaryButton">
+            <Setter Property="Background" Value="#3B82F6" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Padding" Value="24,10" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="CornerRadius" Value="6" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+        <Style Selector="Button.PrimaryButton:pointerover">
+            <Setter Property="Background" Value="#2563EB" />
+        </Style>
+        <Style Selector="Button.PrimaryButton:pressed">
+            <Setter Property="Background" Value="#1D4ED8" />
+        </Style>
+
+        <!-- Accent Button -->
+        <Style Selector="Button.AccentButton">
+            <Setter Property="Background" Value="#20FFFFFF" />
+            <Setter Property="Foreground" Value="#D0D0D0" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Padding" Value="16,6" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="#30FFFFFF" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+        <Style Selector="Button.AccentButton:pointerover">
+            <Setter Property="Background" Value="#30FFFFFF" />
+        </Style>
+        <Style Selector="Button.AccentButton:pressed">
+            <Setter Property="Background" Value="#15FFFFFF" />
+        </Style>
+
+        <!-- Secondary Button -->
+        <Style Selector="Button.SecondaryButton">
+            <Setter Property="Background" Value="#20FFFFFF" />
+            <Setter Property="Foreground" Value="#FF6464" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Padding" Value="20,10" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="#30FF4444" />
+            <Setter Property="CornerRadius" Value="6" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+        <Style Selector="Button.SecondaryButton:pointerover">
+            <Setter Property="Background" Value="#30FF4444" />
+        </Style>
+    </UserControl.Styles>
+</UserControl>

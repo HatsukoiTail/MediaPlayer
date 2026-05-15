@@ -1,0 +1,51 @@
+[20:53:23 224] === Logger started ===
+[20:53:23 227] Decode thread started
+[20:53:23 227] hw frames ctx: 0
+[20:53:23 244] hw frames ctx: 2658284363072
+[20:53:23 244] hw frames ctx: 2658284363072
+[20:53:23 246] HW frames ready: 2658289073152
+[20:53:23 276] hw frames ctx: 2658284363072
+[20:53:23 278] hw frames ctx: 2658284363072
+[20:53:23 279] hw frames ctx: 2658284363072
+[20:53:23 281] hw frames ctx: 2658284363072
+[20:53:23 281] hw frames ctx: 2658284363072
+[20:53:23 285] hw frames ctx: 2658284363072
+[20:53:23 286] hw frames ctx: 2658284363072
+[20:53:23 357] Decoded 50 frames, format = cuda
+[20:53:23 438] Decoded 100 frames, format = cuda
+[20:53:23 511] Decoded 150 frames, format = cuda
+[20:53:23 584] Decoded 200 frames, format = cuda
+[20:53:23 655] Decoded 250 frames, format = cuda
+[20:53:23 711] Decoded 300 frames, format = cuda
+[20:53:23 770] Decoded 350 frames, format = cuda
+[20:53:23 830] Decoded 400 frames, format = cuda
+[20:53:23 891] Decoded 450 frames, format = cuda
+[20:53:23 950] Decoded 500 frames, format = cuda
+[20:53:24 007] Decoded 550 frames, format = cuda
+[20:53:24 066] Decoded 600 frames, format = cuda
+[20:53:24 127] Decoded 650 frames, format = cuda
+[20:53:24 185] Decoded 700 frames, format = cuda
+[20:53:24 245] Decoded 750 frames, format = cuda
+[20:53:24 305] Decoded 800 frames, format = cuda
+[20:53:24 366] Decoded 850 frames, format = cuda
+[20:53:24 424] Decoded 900 frames, format = cuda
+[20:53:24 482] Decoded 950 frames, format = cuda
+[20:53:24 544] Decoded 1000 frames, format = cuda
+[20:53:24 604] Decoded 1050 frames, format = cuda
+[20:53:24 664] Decoded 1100 frames, format = cuda
+[20:53:24 724] Decoded 1150 frames, format = cuda
+[20:53:24 781] Decoded 1200 frames, format = cuda
+[20:53:24 843] Decoded 1250 frames, format = cuda
+[20:53:24 902] Decoded 1300 frames, format = cuda
+[20:53:24 964] Decoded 1350 frames, format = cuda
+[20:53:25 023] Decoded 1400 frames, format = cuda
+[20:53:25 085] Decoded 1450 frames, format = cuda
+[20:53:25 148] Decoded 1500 frames, format = cuda
+[20:53:25 215] Decoded 1550 frames, format = cuda
+[20:53:25 282] Decoded 1600 frames, format = cuda
+[20:53:25 346] Decoded 1650 frames, format = cuda
+[20:53:25 407] Decoded 1700 frames, format = cuda
+[20:53:25 468] Decoded 1750 frames, format = cuda
+[20:53:25 515] Decode thread stopped
+[20:53:28 280] === Decoder closed ===
+[20:53:28 280] === Logger stopped ===

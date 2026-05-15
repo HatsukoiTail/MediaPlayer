@@ -1,0 +1,48 @@
+#ifndef VIDEOFILTER_H
+#define VIDEOFILTER_H
+
+#include <memory>
+
+#include "FrameQueue.h"
+#include "MediaState.h"
+
+class VideoFilter
+{
+public:
+    struct VideoFilterContext
+    {
+        int width = 0;
+        int height = 0;
+        AVPixelFormat format = AV_PIX_FMT_NONE;
+        int serial = 0;
+        int filter_id = 0;
+    };
+
+private:
+public:
+    VideoFilter(std::shared_ptr<FrameQueue> input_queue, std::shared_ptr<FrameQueue> output_queue);
+
+public:
+    int filter(const Frame &frame, Frame &filtered_frame);
+    void start();
+
+private:
+    void filter_loop();
+    int configure_filters(const Frame &frame, AVFilterContext *filter_in, AVFilterContext *filter_out);
+
+private:
+    std::shared_ptr<FrameQueue> input_queue;
+    std::shared_ptr<FrameQueue> output_queue;
+    std::shared_ptr<MediaState> media_state;
+    AVFilterGraphPointer filter_graph;
+    std::vector<AVPixelFormat> allowed_formats;
+    AVRational time_base;
+
+private:
+    AVFilterContext* filter_in = nullptr;
+    AVFilterContext* filter_out = nullptr;
+    AVRational frame_rate;
+    VideoFilterContext last_filter_context;
+};
+
+#endif // VIDEOFILTER_H

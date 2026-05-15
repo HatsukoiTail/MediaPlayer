@@ -1,0 +1,52 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:AvaloniaMedia.ViewModels"
+             x:Class="AvaloniaMedia.Views.ImageViewer"
+             x:DataType="vm:ImageViewerViewModel"
+             Focusable="True">
+
+    <Grid Background="Red">
+        <!-- Image container with clip -->
+        <Grid x:Name="ImageContainer" ClipToBounds="True"
+              Background="Transparent"
+              SizeChanged="OnContainerSizeChanged"
+              PointerPressed="OnPointerPressed"
+              PointerReleased="OnPointerReleased"
+              PointerMoved="OnPointerMoved"
+              PointerWheelChanged="OnPointerWheel">
+
+            <Image x:Name="ImageView"
+                   Source="{Binding Image}"
+                   Stretch="Uniform"
+                   RenderTransformOrigin="0,0"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center" />
+        </Grid>
+
+        <!-- Toolbar -->
+        <Border VerticalAlignment="Top" Background="#101018" Padding="12,8"
+                BorderBrush="#20FFFFFF" BorderThickness="0,0,0,1">
+            <Grid ColumnDefinitions="Auto,*">
+                <Button Grid.Column="0" Content="←  Back" Classes="BackButton"
+                        Command="{Binding Close}" />
+                <TextBlock Grid.Column="1" Text="{Binding Title}" Foreground="#CCFFFFFF"
+                           FontSize="14" VerticalAlignment="Center" Margin="16,0,0,0" />
+            </Grid>
+        </Border>
+    </Grid>
+
+    <UserControl.Styles>
+        <Style Selector="Button.BackButton">
+            <Setter Property="Background" Value="#18FFFFFF" />
+            <Setter Property="Foreground" Value="#D0D0D0" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Padding" Value="14,6" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+        <Style Selector="Button.BackButton:pointerover">
+            <Setter Property="Background" Value="#28FFFFFF" />
+        </Style>
+    </UserControl.Styles>
+</UserControl>

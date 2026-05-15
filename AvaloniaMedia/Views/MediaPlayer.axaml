@@ -1,0 +1,200 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:AvaloniaMedia.ViewModels"
+             xmlns:local="clr-namespace:AvaloniaMedia.FFmpeg.Render"
+             x:Class="AvaloniaMedia.Views.MediaPlayer"
+             x:DataType="vm:MediaPlayerViewModel"
+             Focusable="True">
+
+        <Design.Width>500</Design.Width>
+        <Design.Height>400</Design.Height>
+        <Design.DataContext>
+                <vm:MediaPlayerViewModel/>
+        </Design.DataContext>
+
+        <UserControl.DataContext>
+                <vm:MediaPlayerViewModel />
+        </UserControl.DataContext>
+
+        <Grid Background="Black">
+                <!-- Video layer -->
+                <local:VulkanVideoRender Name="VideoControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+
+                <!-- Control overlay -->
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent">
+
+                        <Grid RowDefinitions="Auto,*,Auto,Auto">
+                                <!-- Exit Button and Media title -->
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Button Classes="AnimationButton" Content="⏎" FontSize="18" Padding="5 10 5 5" Foreground="White" Background="Transparent"
+                                                HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Cursor="Hand"
+                                                Command="{Binding CloseAsync}" />
+                                        <TextBlock Text="{Binding Title}" VerticalAlignment="Center" Foreground="White" />
+                                </StackPanel>
+                                <!-- Progress bar -->
+                                <Slider Grid.Row="2" x:Name="ProgressSlider" Height="22" Margin="8,0"
+                                        Minimum="0" Maximum="{Binding Duration}" Value="{Binding Position, Mode=TwoWay}"
+                                        SmallChange="0.5" LargeChange="10" />
+
+                                <!-- Controls row -->
+                                <Grid Grid.Row="3" ColumnDefinitions="Auto,Auto,Auto,Auto,*,Auto,Auto,Auto,Auto"
+                                      Margin="8,0" VerticalAlignment="Center">
+                                        <!-- Play/Pause -->
+                                        <Button Grid.Column="0" Content="⏸" Classes="AnimationButton" Classes.CentralButton="True"
+                                                Width="36" Height="36" FontSize="18" Background="Transparent" Foreground="White" BorderThickness="0" Cursor="Hand"
+                                                HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                                IsVisible="{Binding !IsPaused}"
+                                                Command="{Binding TogglePlayPause}" />
+                                        <Button Grid.Column="0" Content="▶" Classes="AnimationButton" Classes.CentralButton="True"
+                                                Width="36" Height="36" FontSize="14" Background="Transparent" Foreground="White" BorderThickness="0" Cursor="Hand"
+                                                HorizontalAlignment="Center" VerticalContentAlignment="Center"
+                                                IsVisible="{Binding IsPaused}"
+                                                Command="{Binding TogglePlayPause}" />
+
+                                        <!-- Time -->
+                                        <TextBlock Grid.Column="1" Text="{Binding CurrentTimeText}"
+                                                   Foreground="White" FontSize="12"
+                                                   VerticalAlignment="Center" Margin="4,0" />
+                                        <TextBlock Grid.Column="2" Text=" / "
+                                                   Foreground="#AAFFFFFF" FontSize="12"
+                                                   VerticalAlignment="Center" />
+                                        <TextBlock Grid.Column="3" Text="{Binding DurationText}"
+                                                   Foreground="#AAFFFFFF" FontSize="12"
+                                                   VerticalAlignment="Center" />
+
+
+                                        <Button Name="EposidesButton" Grid.Column="5" Background="Transparent" Foreground="White" Cursor="Hand"
+                                                PointerEntered="EposidesButtonEntered" PointerExited="EposidesButtonExited">
+                                                <TextBlock Text="播放列表" />
+                                        </Button>
+                                        <Popup Name="EposidesPopup" PlacementTarget="{Binding #EposidesButton}" Placement="Top">
+                                                <Border Name="EposidesPopupContent" Width="160" Height="220" PointerEntered="EposidesPopupEntered" PointerExited="EposidesPopupExited"
+                                                        Background="#8F212121" CornerRadius="5">
+                                                        <ItemsControl ItemsSource="{Binding PlayList}">
+                                                                <ItemsControl.ItemTemplate>
+                                                                        <DataTemplate>
+                                                                                <Button Classes="PlayListItem" Content="{Binding}" HorizontalAlignment="Stretch" Foreground="White" Background="Transparent"
+                                                                                        Cursor="Hand"
+                                                                                        Command="{Binding $parent[ItemsControl].((vm:MediaPlayerViewModel)DataContext).SwitchMedia}"
+                                                                                        CommandParameter="{Binding}" />
+                                                                        </DataTemplate>
+                                                                </ItemsControl.ItemTemplate>
+                                                        </ItemsControl>
+                                                </Border>
+                                        </Popup>
+
+                                        <!-- Volume button -->
+                                        <Button Grid.Column="6" Name="VolumeButton" Content="🔊" Classes="CentralButton" Cursor="Hand"
+                                                Width="28" Height="28" FontSize="18" Background="Transparent" Foreground="White" BorderThickness="0"
+                                                PointerEntered="VolumeButtonEntered" PointerExited="VolumeButtonExited" />
+                                        <Popup Name="VolumePopup" PlacementTarget="{Binding #VolumeButton}" Placement="Top">
+                                                <Border Name="VolumePopupContent" Background="#8F212121" CornerRadius="5" BorderThickness="0 0 0 10"
+                                                        PointerEntered="VolumePopupEntered" PointerExited="VolumePopupExited">
+                                                        <StackPanel Orientation="Vertical">
+                                                                <Label Content="{Binding Volume, StringFormat={}{0:F0}}" Foreground="White" HorizontalAlignment="Center" />
+                                                                <Slider Name="VolumeSlider" Minimum="0" Maximum="100" Orientation="Vertical" Cursor="Hand"
+                                                                        Value="{Binding Volume, Mode=TwoWay}" Width="50" Height="120" />
+                                                        </StackPanel>
+                                                </Border>
+                                        </Popup>
+
+                                        <!-- Speed -->
+                                        <Button Grid.Column="7" Name="SpeedButton" Content="倍速" Classes="CentralButton" Cursor="Hand"
+                                                FontSize="18" Background="Transparent" Foreground="White" BorderThickness="0"
+                                                PointerEntered="SpeedButtonEntered" PointerExited="SpeedButtonExited"/>
+                                        <Popup Name="SpeedPopup" PlacementTarget="{Binding #SpeedButton}" Placement="Top">
+                                                <Border Name="SpeedPopupContent" Background="Transparent" CornerRadius="5"
+                                                        PointerEntered="SpeedPopupEntered" PointerExited="SpeedButtonExited">
+                                                        <StackPanel Orientation="Vertical">
+                                                                <Button Content="2.0x" Classes="SpeedButtonItem" />
+                                                                <Button Content="1.5x" Classes="SpeedButtonItem" />
+                                                                <Button Content="1.25x" Classes="SpeedButtonItem" />
+                                                                <Button Content="1.0x" Classes="SpeedButtonItem" />
+                                                                <Button Content="0.75x" Classes="SpeedButtonItem" />
+                                                                <Button Content="0.5x" Classes="SpeedButtonItem" />
+                                                        </StackPanel>
+                                                </Border>
+                                        </Popup>
+
+                                        <!-- Fullscreen -->
+                                        <Button Grid.Column="8" Content="⛶"
+                                                Width="36" Height="36" FontSize="16"
+                                                Background="Transparent" Foreground="White"
+                                                BorderThickness="0"
+                                                Click="OnToggleFullscreen" />
+                                </Grid>
+                        </Grid>
+
+                        <!-- Center play button (visible when paused) -->
+                        <Button Content="▶" HorizontalAlignment="Center" VerticalAlignment="Center" Width="64" Height="64" FontSize="28" Foreground="White"
+                                IsVisible="{Binding IsPaused}"
+                                Command="{Binding TogglePlayPause}" />
+
+                </Grid>
+        </Grid>
+
+        <UserControl.Styles>
+                <Style Selector="Button.AnimationButton">
+                        <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter:pointerover">
+                                <Setter Property="Foreground" Value="White" />
+                        </Style>
+                        <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                                <Setter Property="Foreground" Value="White" />
+                        </Style>
+                        <!-- Transition动画 -->
+                        <Setter Property="RenderTransform" Value="scale(1)" />
+                        <Setter Property="Transitions">
+                                <Transitions>
+                                        <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.15" Easing="CubicEaseOut"/>
+                                </Transitions>
+                        </Setter>
+                        <Style Selector="^:pointerover">
+                                <Setter Property="RenderTransform" Value="scale(1.06)" />
+                        </Style>
+                        <Style Selector="^:pressed">
+                                <Setter Property="RenderTransform" Value="scale(0.95)" />
+                        </Style>
+                </Style>
+
+                <!-- 按钮文字居中 -->
+                <Style Selector="Button.CentralButton">
+                        <Style Selector="^ > AccessText">
+                                <Setter Property="TextAlignment" Value="Center" />
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                        </Style>
+                </Style>
+
+                <Style Selector="Border#EposidesPopupContent">
+
+                </Style>
+
+                <Style Selector="Button.PlayListItem">
+                        <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                                <Setter Property="Foreground" Value="White" />
+                        </Style>
+                </Style>
+
+                <Style Selector="Slider#VolumeSlider">
+                        <!-- 滑动条内容居中 -->
+                        <Style Selector="^ /template/ DataValidationErrors">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                        </Style>
+                        <!-- 滑块样式 -->
+                        <Style Selector="^ /template/ Thumb#SliderThumb">
+                                <Setter Property="Background" Value="#FF9EB3C1" />
+                        </Style>
+                        <Style Selector="^ /template/ RepeatButton#PART_DecreaseButton">
+                                <Setter Property="Background" Value="#FF9EB3C1" />
+                        </Style>
+                </Style>
+
+                <Style Selector="Button.SpeedButtonItem">
+                        <Setter Property="Foreground" Value="White" />
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="Cursor" Value="Hand" />
+        </Style>
+
+        </UserControl.Styles>
+
+</UserControl>

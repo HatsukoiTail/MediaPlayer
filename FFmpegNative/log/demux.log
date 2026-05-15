@@ -1,0 +1,61 @@
+[20:53:23 105] === Logger started ===
+[20:53:23 124] Stream 0: h264, time_base: 1/16000
+[20:53:23 124] Stream 1: aac, time_base: 1/48000
+[20:53:23 227] Demux thread started, 2 streams
+[20:53:23 227] Demux progress: 100 packets read, 37 vp, 63 ap
+[20:53:23 227] Demux progress: 200 packets read, 70 vp, 130 ap
+[20:53:23 228] Demux progress: 300 packets read, 104 vp, 196 ap
+[20:53:23 229] Demux progress: 400 packets read, 138 vp, 262 ap
+[20:53:23 230] Demux progress: 500 packets read, 172 vp, 328 ap
+[20:53:23 420] Demux progress: 600 packets read, 206 vp, 394 ap
+[20:53:23 458] Demux progress: 700 packets read, 240 vp, 460 ap
+[20:53:23 498] Demux progress: 800 packets read, 274 vp, 526 ap
+[20:53:23 534] Demux progress: 900 packets read, 307 vp, 593 ap
+[20:53:23 546] Demux progress: 1000 packets read, 341 vp, 659 ap
+[20:53:23 566] Demux progress: 1100 packets read, 375 vp, 725 ap
+[20:53:23 608] Demux progress: 1200 packets read, 409 vp, 791 ap
+[20:53:23 646] Demux progress: 1300 packets read, 443 vp, 857 ap
+[20:53:23 673] Demux progress: 1400 packets read, 477 vp, 923 ap
+[20:53:23 701] Demux progress: 1500 packets read, 510 vp, 990 ap
+[20:53:23 738] Demux progress: 1600 packets read, 544 vp, 1056 ap
+[20:53:23 780] Demux progress: 1700 packets read, 578 vp, 1122 ap
+[20:53:23 825] Demux progress: 1800 packets read, 612 vp, 1188 ap
+[20:53:23 848] Demux progress: 1900 packets read, 646 vp, 1254 ap
+[20:53:23 877] Demux progress: 2000 packets read, 680 vp, 1320 ap
+[20:53:23 907] Demux progress: 2100 packets read, 713 vp, 1387 ap
+[20:53:23 950] Demux progress: 2200 packets read, 747 vp, 1453 ap
+[20:53:23 992] Demux progress: 2300 packets read, 781 vp, 1519 ap
+[20:53:24 025] Demux progress: 2400 packets read, 815 vp, 1585 ap
+[20:53:24 064] Demux progress: 2500 packets read, 849 vp, 1651 ap
+[20:53:24 118] Demux progress: 2600 packets read, 883 vp, 1717 ap
+[20:53:24 170] Demux progress: 2700 packets read, 916 vp, 1784 ap
+[20:53:24 223] Demux progress: 2800 packets read, 950 vp, 1850 ap
+[20:53:24 286] Demux progress: 2900 packets read, 984 vp, 1916 ap
+[20:53:24 343] Demux progress: 3000 packets read, 1018 vp, 1982 ap
+[20:53:24 380] Demux progress: 3100 packets read, 1052 vp, 2048 ap
+[20:53:24 424] Demux progress: 3200 packets read, 1086 vp, 2114 ap
+[20:53:24 455] Demux progress: 3300 packets read, 1120 vp, 2180 ap
+[20:53:24 481] Demux progress: 3400 packets read, 1153 vp, 2247 ap
+[20:53:24 500] Demux progress: 3500 packets read, 1187 vp, 2313 ap
+[20:53:24 552] Demux progress: 3600 packets read, 1221 vp, 2379 ap
+[20:53:24 576] Demux progress: 3700 packets read, 1255 vp, 2445 ap
+[20:53:24 596] Demux progress: 3800 packets read, 1289 vp, 2511 ap
+[20:53:24 633] Demux progress: 3900 packets read, 1323 vp, 2577 ap
+[20:53:24 638] Demux progress: 4000 packets read, 1356 vp, 2644 ap
+[20:53:24 668] Demux progress: 4100 packets read, 1390 vp, 2710 ap
+[20:53:24 705] Demux progress: 4200 packets read, 1424 vp, 2776 ap
+[20:53:24 743] Demux progress: 4300 packets read, 1458 vp, 2842 ap
+[20:53:24 749] Demux progress: 4400 packets read, 1492 vp, 2908 ap
+[20:53:24 872] Demux progress: 4500 packets read, 1526 vp, 2974 ap
+[20:53:25 007] Demux progress: 4600 packets read, 1559 vp, 3041 ap
+[20:53:25 135] Demux progress: 4700 packets read, 1593 vp, 3107 ap
+[20:53:25 164] Demux progress: 4800 packets read, 1627 vp, 3173 ap
+[20:53:25 192] Demux progress: 4900 packets read, 1661 vp, 3239 ap
+[20:53:25 225] Demux progress: 5000 packets read, 1695 vp, 3305 ap
+[20:53:25 245] Demux progress: 5100 packets read, 1729 vp, 3371 ap
+[20:53:25 261] Demux progress: 5200 packets read, 1762 vp, 3438 ap
+[20:53:25 266] Demux progress: 5300 packets read, 1793 vp, 3507 ap
+[20:53:25 266] Demux EOF, total packets: 5303
+[20:53:25 266] Demux thread exiting
+[20:53:28 280] Demuxer closed
+[20:53:28 280] === Logger stopped ===

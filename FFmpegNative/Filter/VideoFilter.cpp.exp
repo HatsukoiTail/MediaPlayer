@@ -1,0 +1,346 @@
+#include "VideoFilter.h"
+
+#include <map>
+#include <sstream>
+
+extern "C"
+{
+#include <libavfilter/avfilter.h>
+#include <libavfilter/buffersrc.h>
+#include <libavfilter/buffersink.h>
+#include <libavutil/opt.h>
+#include <libavutil/display.h>
+}
+
+#include "FilterConfigure.h"
+#include "Print.h"
+
+static bool is_filter_matched(VideoFilterContext last, VideoFilterContext current)
+{
+    return last.width == current.width && last.height == current.height && last.format == current.format && last.serial == current.serial && last.filter_id == current.filter_id;
+}
+
+static int insert_filter(const char *filter_name, const char *filter_args, AVFilterGraph *filter_graph, AVFilterContext *last_filter)
+{
+    AVFilterContext *filter_ctx = nullptr;
+    int result = avfilter_graph_create_filter(&filter_ctx, avfilter_get_by_name(filter_name), filter_name, filter_args, nullptr, filter_graph);
+    if (result < 0)
+    {
+        print(Ansi::Red, "Failed to create filter {} with args {}", filter_name, filter_args);
+        return result;
+    }
+    result = avfilter_link(last_filter, 0, filter_ctx, 0);
+    if (result < 0)
+    {
+        print(Ansi::Red, "Failed to link filter {} with args {}", filter_name, filter_args);
+        return result;
+    }
+    last_filter = filter_ctx;
+    return result;
+}
+
+static int configure_input_filter(AVFilterGraph *filter_graph, const AVFrame *frame)
+{
+    // 创建并配置输入滤镜（buffer）
+    std::unique_ptr<AVBufferSrcParameters, void (*)(void *)> param(av_buffersrc_parameters_alloc(), [](void *p)
+                                                                   { av_free(&p); });
+    if (!param)
+    {
+        print(Ansi::Red, "Failed to allocate buffer source parameters");
+        return AVERROR(ENOMEM);
+    }
+
+    param->format = frame->format;
+    param->time_base = ;
+    param->width = frame->width;
+    param->height = frame->height;
+    param->sample_aspect_ratio = ;
+    param->color_space = frame->colorspace;
+    param->color_range = frame->color_range;
+    param->alpha_mode = frame->alpha_mode;
+    param->frame_rate = ;
+    param->hw_frames_ctx = frame->hw_frames_ctx;
+
+    // 滤镜创建后即与滤镜图绑定，在销毁滤镜图时会自动销毁滤镜
+    auto filter_input = avfilter_graph_alloc_filter(filter_graph, avfilter_get_by_name("buffer"), "in");
+    if (!filter_input)
+    {
+        print(Ansi::Red, "Failed to create buffer filter for input");
+        return AVERROR(ENOMEM);
+    }
+
+    int result = av_buffersrc_parameters_set(filter_input, param.get());
+    if (result < 0)
+    {
+        print(Ansi::Red, "Failed to set buffer source parameters for input");
+        return result;
+    }
+
+    result = avfilter_init_dict(filter_input, nullptr);
+    if (result < 0)
+    {
+        print(Ansi::Red, "Failed to initialize buffer filter for input");
+        return result;
+    }
+}
+
+static int configure_ratation_filter(AVFilterGraph *filter_graph, int32_t *display_matrix, const AVFrame *frame, AVFilterContext *last_filter)
+{
+    double theta = 0.0;
+    if (display_matrix)
+    {
+        theta = -std::round(av_display_rotation_get(display_matrix));
+    }
+    theta -= 360 * std::floor(theta / 360.0 + 0.9 / 360.0);
+    if (std::fabs(theta - 90.0) < 1.0)
+    {
+        // 旋转90度
+        const auto filter_args = display_matrix[3] > 0 ? "cclock_flip" : "clock";
+        return insert_filter("transpose", filter_args, filter_graph, last_filter);
+    }
+    else if (std::fabs(theta - 180.0) < 1.0)
+    {
+        // 旋转180度
+        if (display_matrix[0] < 0)
+        {
+            insert_filter("hflip", nullptr, filter_graph, last_filter);
+        }
+        if (display_matrix[4] < 0)
+        {
+            insert_filter("vflip", nullptr, filter_graph, last_filter);
+        }
+    }
+    else if (std::fabs(theta - 270.0) < 1.0)
+    {
+        // 旋转270度
+        const auto filter_args = display_matrix[3] > 0 ? "clock_flip" : "cclock";
+        return insert_filter("transpose", filter_args, filter_graph, last_filter);
+    }
+    else if (std::fabs(theta) > 1.0)
+    {
+        // 旋转任意角度
+        const auto filter_args = std::format("{:.4f}*PI/180.0", theta);
+        return insert_filter("rotate", filter_args.c_str(), filter_graph, last_filter);
+    }
+    else
+    {
+        if (display_matrix && display_matrix[4] < 0)
+        {
+            return insert_filter("vflip", nullptr, filter_graph, last_filter);
+        }
+    }
+}
+
+int VideoFilter::filter(const Frame &frame, Frame &filtered_frame)
+{
+    auto &media_state = *this->media_state;
+    if (!is_filter_matched(this->last_filter_context, VideoFilterContext{frame.width(), frame.height(), frame.format(), frame.serial(), media_state.vfilter_id()}))
+    {
+        // 注意，AVFilterGraph可以配置线程数
+        configure_filters();
+        last_filter_context.width = frame.width();
+        last_filter_context.height = frame.height();
+        last_filter_context.format = frame.format();
+        last_filter_context.serial = frame.serial();
+        last_filter_context.filter_id = media_state.vfilter_id();
+
+        frame_rate = av_buffersink_get_frame_rate(filter_out);
+    }
+
+    int result = av_buffersrc_add_frame(filter_in, frame.ptr());
+    if (result < 0)
+    {
+        print(Ansi::Red, "Failed to add frame to filter graph");
+        return result;
+    }
+
+    while (true)
+    {
+        const auto filter_start_time = std::chrono::steady_clock::now();
+
+        auto sink_frame = Frame(av_frame_alloc());
+        int result = av_buffersink_get_frame_flags(filter_out, sink_frame.ptr(), AV_BUFFERSINK_FLAG_NO_REQUEST);
+        if (result < 0)
+        {
+            if (result == AVERROR_EOF)
+            {
+                // 通知MediaState视频解码完成
+            }
+            break;
+        }
+
+        const auto filter_end_time = std::chrono::steady_clock::now();
+        double filter_delay = std::chrono::duration_cast<std::chrono::microseconds>(filter_end_time - filter_start_time).count() / 1000000.0;
+        filter_delay = std::max(filter_delay, 1.0);
+
+        auto time_base = av_buffersink_get_time_base(filter_out);
+        double duration = (frame_rate.num && frame_rate.den) ? av_q2d(AVRational{frame_rate.den, frame_rate.num}) : 0.0;
+        double pts = (frame.pts() == AV_NOPTS_VALUE) ? std::numeric_limits<double>::quiet_NaN() : frame.pts() * av_q2d(time_base);
+
+        filtered_frame = std::move(sink_frame);
+        if (this->output_queue.serial() != media_state.packet_queue_serial())
+            break;
+    }
+}
+
+void VideoFilter::start()
+{
+}
+
+void VideoFilter::filter_loop()
+{
+    auto &media_state = *this->media_state;
+    VideoFilterContext last_filter_context = {};
+    AVFilterContext *filter_in = nullptr, *filter_out = nullptr;
+    AVRational frame_rate = {};
+
+    while (true)
+    {
+        if (media_state.is_aborted())
+        {
+            break;
+        }
+
+        auto frame = this->input_queue->pop();
+        if (!is_filter_matched(last_filter_context, VideoFilterContext{frame.width(), frame.height(), frame.format(), frame.serial(), media_state.vfilter_id()}))
+        {
+            // 注意，AVFilterGraph可以配置线程数
+            configure_filters();
+            last_filter_context.width = frame.width();
+            last_filter_context.height = frame.height();
+            last_filter_context.format = frame.format();
+            last_filter_context.serial = frame.serial();
+            last_filter_context.filter_id = media_state.vfilter_id();
+
+            frame_rate = av_buffersink_get_frame_rate(filter_out);
+        }
+
+        int result = av_buffersrc_add_frame(filter_in, frame.ptr());
+        if (result < 0)
+        {
+            print(Ansi::Red, "Failed to add frame to filter graph");
+            break;
+        }
+
+        while (true)
+        {
+            const auto filter_start_time = std::chrono::steady_clock::now();
+
+            int result = av_buffersink_get_frame_flags(filter_out, frame.ptr(), AV_BUFFERSINK_FLAG_NO_REQUEST);
+            if (result < 0)
+            {
+                if (result == AVERROR_EOF)
+                {
+                    // 通知MediaState视频解码完成
+                }
+                break;
+            }
+
+            const auto filter_end_time = std::chrono::steady_clock::now();
+            double filter_delay = std::chrono::duration_cast<std::chrono::microseconds>(filter_end_time - filter_start_time).count() / 1000000.0;
+            filter_delay = std::max(filter_delay, 1.0);
+
+            auto time_base = av_buffersink_get_time_base(filter_out);
+            double duration = (frame_rate.num && frame_rate.den) ? av_q2d(AVRational{frame_rate.den, frame_rate.num}) : 0.0;
+            double pts = (frame.pts() == AV_NOPTS_VALUE) ? std::numeric_limits<double>::quiet_NaN() : frame.pts() * av_q2d(time_base);
+
+            this->output_queue->push(std::move(frame));
+            if (this->output_queue.serial() != media_state.packet_queue_serial())
+                break;
+        }
+    }
+}
+
+int VideoFilter::configure_filters(const Frame &frame, AVFilterContext *filter_in, AVFilterContext *filter_out)
+{
+    const auto formats = this->allowed_formats.data();
+    const auto sws_filter_map = std::map<std::string, std::string>();
+
+    AVFilterGraphPointer filter_graph(avfilter_graph_alloc());
+    if (!filter_graph)
+    {
+        return -1;
+    }
+
+    // 设置缩放参数
+    std::stringstream sws_ss;
+    for (const auto &[key, value] : sws_filter_map)
+    {
+        if (key == "sws_flags")
+        {
+            sws_ss << key << "=" << value << ":";
+        }
+        else
+        {
+            sws_ss << "flags=" << value << ":";
+        }
+    }
+    sws_ss.seekp(-1, std::ios_base::end);
+    filter_graph->scale_sws_opts = av_strdup(sws_ss.str().c_str());
+
+    auto filter_output = avfilter_graph_alloc_filter(filter_graph.get(), avfilter_get_by_name("buffersink"), "out");
+    if (!filter_output)
+    {
+        print(Ansi::Red, "Failed to create buffer filter for output");
+        return AVERROR(ENOMEM);
+    }
+
+    int result = av_opt_set_array(filter_output, "pixel_formats", AV_OPT_SEARCH_CHILDREN, 0, this->allowed_formats.size(), AV_OPT_TYPE_PIXEL_FMT, formats);
+    if (result < 0)
+    {
+        print(Ansi::Red, "Failed to set pixel formats for output");
+        return result;
+    }
+    // 对于非Vulkan渲染，需要设置色彩空间
+    auto supported_color_spaces = std::vector<AVColorSpace>();
+    result = av_opt_set_array(filter_output, "colorspaces", AV_OPT_SEARCH_CHILDREN, 0, supported_color_spaces.size(), AV_OPT_TYPE_INT, supported_color_spaces.data());
+    if (result < 0)
+    {
+        print(Ansi::Red, "Failed to set color spaces for output");
+        return result;
+    }
+
+    result = av_opt_set_array(filter_output, "alphamodes", AV_OPT_SEARCH_CHILDREN, 0, FF_ARRAY_ELEMS(sdl_supported_alpha_modes), AV_OPT_TYPE_INT, sdl_supported_alpha_modes);
+    if (result < 0)
+    {
+        print(Ansi::Red, "Failed to set alpha modes for output");
+        return result;
+    }
+
+    result = avfilter_init_dict(filter_output, nullptr);
+    if (result < 0)
+    {
+        print(Ansi::Red, "Failed to initialize buffer filter for output");
+        return result;
+    }
+
+    // 配置旋转滤镜
+    auto autoratate = media_state.autoratate();
+    if (autoratate)
+    {
+        int32_t *display_matrix = nullptr;
+        auto side_data = av_frame_get_side_data(frame.ptr(), AV_FRAME_DATA_DISPLAYMATRIX);
+        if (side_data)
+        {
+            display_matrix = reinterpret_cast<int32_t *>(side_data->data);
+        }
+        if (!display_matrix)
+        {
+            const auto packet_side_data = av_packet_side_data_get();
+        }
+        result = configure_ratation_filter(filter_graph.get(), display_matrix, frame.ptr(), filter_in);
+        if (result < 0)
+        {
+            return result;
+        }
+    }
+av_buffersink_get_frame_flags
+    // 配置用户滤镜
+    const auto vfilter = std::string();
+    result = configure_filtergraph(filter_graph.get(), vfilter.c_str(), filter_input, filter_output);
+
+    filter_in = filter_input;
+    filter_out = filter_output;
+
+    return 0;
+}

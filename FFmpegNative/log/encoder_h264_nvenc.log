@@ -1,0 +1,25 @@
+[20:53:23 275] === Logger started ===
+[20:53:23 366] Encoded packet: pts=157680
+[20:53:23 427] Encoded packet: pts=296550
+[20:53:23 517] Encoded packet: pts=518040
+[20:53:23 613] Encoded packet: pts=762030
+[20:53:23 684] Encoded packet: pts=975960
+[20:53:23 756] Encoded packet: pts=1204920
+[20:53:23 834] Encoded packet: pts=1445220
+[20:53:23 935] Encoded packet: pts=1786770
+[20:53:23 978] Encoded packet: pts=1921950
+[20:53:24 050] Encoded packet: pts=2135880
+[20:53:24 099] Encoded packet: pts=2286000
+[20:53:24 190] Encoded packet: pts=2590110
+[20:53:24 239] Encoded packet: pts=2747790
+[20:53:24 296] Encoded packet: pts=2909160
+[20:53:24 515] Encoded packet: pts=3618630
+[20:53:24 781] Encoded packet: pts=4433220
+[20:53:24 848] Encoded packet: pts=4643370
+[20:53:25 003] Encoded packet: pts=5131350
+[20:53:25 070] Encoded packet: pts=5360400
+[20:53:25 288] Encoded packet: pts=5976000
+[20:53:25 412] Encoded packet: pts=6351390
+[20:53:25 518] Encoded packet: pts=6707970
+[20:53:25 521] === Encoder thread stopped ===
+[20:53:28 253] === Logger stopped ===

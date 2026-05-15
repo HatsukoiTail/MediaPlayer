@@ -1,0 +1,85 @@
+[20:53:23 224] === Logger started ===
+[20:53:23 227] Decode thread started
+[20:53:23 227] hw frames ctx: 0
+[20:53:23 227] hw frames ctx: 0
+[20:53:23 227] hw frames ctx: 0
+[20:53:23 227] hw frames ctx: 0
+[20:53:23 227] hw frames ctx: 0
+[20:53:23 227] hw frames ctx: 0
+[20:53:23 227] hw frames ctx: 0
+[20:53:23 227] hw frames ctx: 0
+[20:53:23 227] hw frames ctx: 0
+[20:53:23 227] hw frames ctx: 0
+[20:53:23 233] Decoded 50 frames, format = gray
+[20:53:23 244] Decoded 100 frames, format = gray
+[20:53:23 255] Decoded 150 frames, format = gray
+[20:53:23 265] Decoded 200 frames, format = gray
+[20:53:23 276] Decoded 250 frames, format = gray
+[20:53:23 288] Decoded 300 frames, format = gray
+[20:53:23 299] Decoded 350 frames, format = gray
+[20:53:23 420] Decoded 400 frames, format = gray
+[20:53:23 457] Decoded 450 frames, format = gray
+[20:53:23 486] Decoded 500 frames, format = gray
+[20:53:23 510] Decoded 550 frames, format = gray
+[20:53:23 538] Decoded 600 frames, format = gray
+[20:53:23 545] Decoded 650 frames, format = gray
+[20:53:23 562] Decoded 700 frames, format = gray
+[20:53:23 572] Decoded 750 frames, format = gray
+[20:53:23 613] Decoded 800 frames, format = gray
+[20:53:23 639] Decoded 850 frames, format = gray
+[20:53:23 662] Decoded 900 frames, format = gray
+[20:53:23 684] Decoded 950 frames, format = gray
+[20:53:23 703] Decoded 1000 frames, format = gray
+[20:53:23 733] Decoded 1050 frames, format = gray
+[20:53:23 770] Decoded 1100 frames, format = gray
+[20:53:23 796] Decoded 1150 frames, format = gray
+[20:53:23 829] Decoded 1200 frames, format = gray
+[20:53:23 848] Decoded 1250 frames, format = gray
+[20:53:23 867] Decoded 1300 frames, format = gray
+[20:53:23 887] Decoded 1350 frames, format = gray
+[20:53:23 915] Decoded 1400 frames, format = gray
+[20:53:23 945] Decoded 1450 frames, format = gray
+[20:53:23 978] Decoded 1500 frames, format = gray
+[20:53:24 007] Decoded 1550 frames, format = gray
+[20:53:24 030] Decoded 1600 frames, format = gray
+[20:53:24 064] Decoded 1650 frames, format = gray
+[20:53:24 104] Decoded 1700 frames, format = gray
+[20:53:24 142] Decoded 1750 frames, format = gray
+[20:53:24 180] Decoded 1800 frames, format = gray
+[20:53:24 223] Decoded 1850 frames, format = gray
+[20:53:24 272] Decoded 1900 frames, format = gray
+[20:53:24 315] Decoded 1950 frames, format = gray
+[20:53:24 356] Decoded 2000 frames, format = gray
+[20:53:24 380] Decoded 2050 frames, format = gray
+[20:53:24 409] Decoded 2100 frames, format = gray
+[20:53:24 441] Decoded 2150 frames, format = gray
+[20:53:24 456] Decoded 2200 frames, format = gray
+[20:53:24 482] Decoded 2250 frames, format = gray
+[20:53:24 492] Decoded 2300 frames, format = gray
+[20:53:24 533] Decoded 2350 frames, format = gray
+[20:53:24 557] Decoded 2400 frames, format = gray
+[20:53:24 576] Decoded 2450 frames, format = gray
+[20:53:24 595] Decoded 2500 frames, format = gray
+[20:53:24 605] Decoded 2550 frames, format = gray
+[20:53:24 633] Decoded 2600 frames, format = gray
+[20:53:24 642] Decoded 2650 frames, format = gray
+[20:53:24 655] Decoded 2700 frames, format = gray
+[20:53:24 688] Decoded 2750 frames, format = gray
+[20:53:24 716] Decoded 2800 frames, format = gray
+[20:53:24 744] Decoded 2850 frames, format = gray
+[20:53:24 751] Decoded 2900 frames, format = gray
+[20:53:24 824] Decoded 2950 frames, format = gray
+[20:53:24 924] Decoded 3000 frames, format = gray
+[20:53:25 040] Decoded 3050 frames, format = gray
+[20:53:25 134] Decoded 3100 frames, format = gray
+[20:53:25 153] Decoded 3150 frames, format = gray
+[20:53:25 175] Decoded 3200 frames, format = gray
+[20:53:25 198] Decoded 3250 frames, format = gray
+[20:53:25 225] Decoded 3300 frames, format = gray
+[20:53:25 240] Decoded 3350 frames, format = gray
+[20:53:25 252] Decoded 3400 frames, format = gray
+[20:53:25 262] Decoded 3450 frames, format = gray
+[20:53:25 272] Decoded 3500 frames, format = gray
+[20:53:25 275] Decode thread stopped
+[20:53:28 239] === Decoder closed ===
+[20:53:28 239] === Logger stopped ===

@@ -1,0 +1,162 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:AvaloniaMedia.ViewModels"
+             xmlns:views="clr-namespace:AvaloniaMedia.Views"
+             x:Class="AvaloniaMedia.Views.MediaLibrary"
+             x:DataType="vm:MediaLibraryViewModel"
+             Focusable="True">
+
+    <Design.DataContext>
+        <vm:MediaLibraryViewModel />
+    </Design.DataContext>
+
+    <Grid RowDefinitions="Auto,Auto,*" Background="#0A0A10">
+
+        <!-- ========== Toolbar ========== -->
+        <Border Grid.Row="0" Background="#101018" BorderBrush="#20FFFFFF" BorderThickness="0,0,0,1">
+            <Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto" Margin="16,10" ColumnSpacing="10">
+                <Button Grid.Column="0" Content="📁 Browse" Classes="ToolbarButton"
+                        Command="{Binding SelectFolder}" />
+                <TextBlock Grid.Column="1" Text="{Binding FolderPath}" VerticalAlignment="Center"
+                           Foreground="#80FFFFFF" FontSize="13" TextTrimming="CharacterEllipsis" />
+
+                <TextBox Grid.Column="2" Text="{Binding SearchText}" Width="200"
+                         PlaceholderText="🔍  Search..." Classes="ToolbarSearch"
+                         VerticalContentAlignment="Center"/>
+
+                <ComboBox Grid.Column="3" ItemsSource="{Binding SortModes}"
+                          SelectedItem="{Binding SortMode}" Width="100" Classes="ToolbarCombo" />
+
+                <StackPanel Grid.Column="4" Orientation="Horizontal" Spacing="2">
+                    <Button Classes="ViewButton" Command="{Binding SetLargeIcons}" ToolTip.Tip="Large icons">
+                        <TextBlock Text="🔲" FontSize="18" VerticalAlignment="Center" />
+                    </Button>
+                    <Button Classes="ViewButton" Command="{Binding SetMediumIcons}" ToolTip.Tip="Medium icons">
+                        <TextBlock Text="🔳" FontSize="14" />
+                    </Button>
+                    <Button Classes="ViewButton" Command="{Binding SetListView}" ToolTip.Tip="List">
+                        <TextBlock Text="📋" FontSize="14" />
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- ========== Status Bar ========== -->
+        <Border Grid.Row="1" Background="#0D0D14" Padding="12,6" IsVisible="{Binding IsLoading}">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <TextBlock Grid.Column="0" Text="{Binding StatusText}" Foreground="#80FFFFFF" FontSize="12" />
+                <ProgressBar Grid.Column="1" Value="{Binding LoadProgress}" Minimum="0" Maximum="100"
+                             Height="4" Margin="12,0" Classes="ThinProgress" />
+            </Grid>
+        </Border>
+        <Border Grid.Row="1" Background="#0D0D14" Padding="12,6" IsVisible="{Binding !IsLoading}">
+            <TextBlock Text="{Binding StatusText}" Foreground="#60FFFFFF" FontSize="12" />
+        </Border>
+
+        <!-- ========== Content ========== -->
+        <ScrollViewer x:Name="MediaScrollViewer" Grid.Row="2"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto" AllowAutoHide="True">
+            <ItemsControl x:Name="MediaItemsControl" ItemsSource="{Binding Items}" Focusable="False">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:MediaItemViewModel">
+                        <views:MediaItem />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+    </Grid>
+
+    <UserControl.Styles>
+        <!-- Toolbar -->
+        <Style Selector="Button.ToolbarButton">
+            <Setter Property="Background" Value="#20FFFFFF" />
+            <Setter Property="Foreground" Value="#D0D0D0" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Padding" Value="14,6" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+        <Style Selector="Button.ToolbarButton:pointerover">
+            <Setter Property="Background" Value="#30FFFFFF" />
+        </Style>
+
+        <Style Selector="TextBox.ToolbarSearch">
+            <Setter Property="Background" Value="#15FFFFFF" />
+            <Setter Property="Foreground" Value="#D0D0D0" />
+            <Setter Property="BorderBrush" Value="#20FFFFFF" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="Padding" Value="8,4" />
+            <Setter Property="FontSize" Value="13" />
+        </Style>
+
+        <Style Selector="ComboBox.ToolbarCombo">
+            <Setter Property="Background" Value="#15FFFFFF" />
+            <Setter Property="Foreground" Value="#D0D0D0" />
+            <Setter Property="BorderBrush" Value="#20FFFFFF" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="Padding" Value="6,4" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+
+        <Style Selector="Button.ViewButton">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="#80FFFFFF" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="CornerRadius" Value="3" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Width" Value="40" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style Selector="Button.ViewButton:pointerover">
+            <Setter Property="Background" Value="#15FFFFFF" />
+            <Setter Property="Foreground" Value="#D0D0D0" />
+        </Style>
+
+        <!-- Cards -->
+        <Style Selector="Border.CardLarge">
+            <Setter Property="Background" Value="#0DFFFFFF" />
+            <Setter Property="CornerRadius" Value="6" />
+            <Setter Property="BorderBrush" Value="#12FFFFFF" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+        <Style Selector="Border.CardLarge:pointerover">
+            <Setter Property="Background" Value="#15FFFFFF" />
+        </Style>
+
+        <Style Selector="Border.CardMedium">
+            <Setter Property="Background" Value="#0DFFFFFF" />
+            <Setter Property="CornerRadius" Value="5" />
+            <Setter Property="BorderBrush" Value="#12FFFFFF" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+        <Style Selector="Border.CardMedium:pointerover">
+            <Setter Property="Background" Value="#15FFFFFF" />
+        </Style>
+
+        <Style Selector="Border.CardList">
+            <Setter Property="Background" Value="#08FFFFFF" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+        <Style Selector="Border.CardList:pointerover">
+            <Setter Property="Background" Value="#12FFFFFF" />
+        </Style>
+
+        <!-- Thin Progress -->
+        <Style Selector="ProgressBar.ThinProgress">
+            <Setter Property="Foreground" Value="#3B82F6" />
+            <Setter Property="Background" Value="#15FFFFFF" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="CornerRadius" Value="2" />
+        </Style>
+    </UserControl.Styles>
+</UserControl>

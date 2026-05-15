@@ -1,0 +1,96 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:AvaloniaMedia.ViewModels"
+             xmlns:converters="clr-namespace:AvaloniaMedia.Converters"
+             x:Class="AvaloniaMedia.Views.MediaItem"
+             x:DataType="vm:MediaItemViewModel">
+
+    <UserControl.Resources>
+        <converters:IsNullValueConverter x:Key="IsNullValueConverter" />
+        <converters:IsNotNullValueConverter x:Key="IsNotNullValueConverter" />
+    </UserControl.Resources>
+
+    <Panel>
+        <!-- ======== Large Icon ======== -->
+        <Border Classes="CardLarge" Margin="6" Padding="8"
+                Width="200" Height="190"
+                IsVisible="{Binding IsLargeView}"
+                DoubleTapped="OnDoubleTapped">
+            <Grid RowDefinitions="*,Auto,Auto">
+                <Border Grid.Row="0" Background="#0AFFFFFF" CornerRadius="4"
+                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                        Margin="0,0,0,6">
+                    <Grid>
+                        <Image Source="{Binding Thumbnail}" Stretch="Uniform"
+                               IsVisible="{Binding Thumbnail, Converter={StaticResource IsNotNullValueConverter}}" />
+                        <TextBlock Text="{Binding MediaTypeIcon}" FontSize="40"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   IsVisible="{Binding Thumbnail, Converter={StaticResource IsNullValueConverter}}" />
+                    </Grid>
+                </Border>
+                <TextBlock Grid.Row="1" Text="{Binding FileName}" FontSize="11"
+                           Foreground="#D0D0D0" TextTrimming="CharacterEllipsis"
+                           ToolTip.Tip="{Binding FilePath}" />
+                <TextBlock Grid.Row="2" FontSize="10" Foreground="#70FFFFFF"
+                           TextTrimming="CharacterEllipsis">
+                    <Run Text="{Binding SubtitleText}" />
+                    <Run Text=" · " />
+                    <Run Text="{Binding FileSizeText}" />
+                </TextBlock>
+            </Grid>
+        </Border>
+
+        <!-- ======== Medium Icon ======== -->
+        <Border Classes="CardMedium" Margin="4" Padding="6"
+                Width="140" Height="140"
+                IsVisible="{Binding IsMediumView}"
+                DoubleTapped="OnDoubleTapped">
+            <Grid RowDefinitions="*,Auto">
+                <Border Grid.Row="0" Background="#0AFFFFFF" CornerRadius="3"
+                        Margin="0,0,0,4">
+                    <Grid>
+                        <Image Source="{Binding Thumbnail}" Stretch="Uniform"
+                               IsVisible="{Binding Thumbnail, Converter={StaticResource IsNotNullValueConverter}}" />
+                        <TextBlock Text="{Binding MediaTypeIcon}" FontSize="28"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   IsVisible="{Binding Thumbnail, Converter={StaticResource IsNullValueConverter}}" />
+                    </Grid>
+                </Border>
+                <StackPanel Grid.Row="1">
+                    <TextBlock Text="{Binding FileName}" FontSize="10"
+                               Foreground="#D0D0D0" TextTrimming="CharacterEllipsis" />
+                    <TextBlock Text="{Binding SubtitleText}" FontSize="9"
+                               Foreground="#60FFFFFF" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- ======== List ======== -->
+        <Border Classes="CardList" Margin="4,2" Padding="10,6" Height="52"
+                IsVisible="{Binding IsListView}"
+                DoubleTapped="OnDoubleTapped">
+            <Grid ColumnDefinitions="48,*,Auto,Auto,Auto" ColumnSpacing="12">
+                <Border Grid.Column="0" Background="#0AFFFFFF" CornerRadius="3"
+                        Width="48" Height="32">
+                    <Grid>
+                        <Image Source="{Binding Thumbnail}" Stretch="Uniform"
+                               IsVisible="{Binding Thumbnail, Converter={StaticResource IsNotNullValueConverter}}" />
+                        <TextBlock Text="{Binding MediaTypeIcon}" FontSize="16"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   IsVisible="{Binding Thumbnail, Converter={StaticResource IsNullValueConverter}}" />
+                    </Grid>
+                </Border>
+                <TextBlock Grid.Column="1" Text="{Binding FileName}" FontSize="12"
+                           Foreground="#D0D0D0" VerticalAlignment="Center"
+                           TextTrimming="CharacterEllipsis" />
+                <TextBlock Grid.Column="2" Text="{Binding SubtitleText}" FontSize="11"
+                           Foreground="#80FFFFFF" VerticalAlignment="Center" />
+                <TextBlock Grid.Column="3" Text="{Binding ResolutionText}" FontSize="11"
+                           Foreground="#60FFFFFF" VerticalAlignment="Center" />
+                <TextBlock Grid.Column="4" Text="{Binding FileSizeText}" FontSize="11"
+                           Foreground="#60FFFFFF" VerticalAlignment="Center" Width="70"
+                           TextAlignment="Right" />
+            </Grid>
+        </Border>
+    </Panel>
+</UserControl>

@@ -1,0 +1,19 @@
+#ifndef AUDIOFILTER_H
+#define AUDIOFILTER_H
+
+#include "Frame.h"
+#include "SmartStruct.h"
+
+class AudioFilter
+{
+
+public:
+    int filter(const Frame& frame);
+
+private:
+    AVFilterGraphPointer filter_graph;
+    AVFilterContext *filter_in;
+    AVFilterContext *filter_out;
+};
+
+#endif // AUDIOFILTER_H

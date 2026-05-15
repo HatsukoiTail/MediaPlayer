@@ -1,0 +1,32 @@
+#include "AudioFilter.h"
+
+static inline bool is_format_equal(
+    AVSampleFormat format1, const AVChannelLayout *layout1, int sample_rate1,
+    AVSampleFormat format2, const AVChannelLayout *layout2, int sample_rate2)
+{
+    if (sample_rate1 != sample_rate2)
+        return false;
+    if(av_channel_layout_compare(layout1, layout2))
+        return false;
+    if (layout1->nb_channels == 1 && layout2->nb_channels == 1)
+        return av_get_packed_sample_fmt(format1) == av_get_packed_sample_fmt(format2);
+    else
+        return format1 == format2;
+}
+
+static int configure_filter()
+{
+    
+}
+
+int AudioFilter::filter(const Frame &frame)
+{
+    auto time_base = AVRational{1, frame.sample_rate()};
+    
+    bool reconfigure = true;
+
+    if (reconfigure)
+    {
+
+    }
+}
