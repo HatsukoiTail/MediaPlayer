@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="Loading">Resource/Icon/Loading.gif</file>
+        <file alias="Paused">Resource/Icon/Paused.png</file>
+        <file alias="Playing">Resource/Icon/Playing.png</file>
+        <file alias="Last">Resource/Icon/Last.svg</file>
+        <file alias="Next">Resource/Icon/Next.svg</file>
+        <file alias="Filter">Resource/Icon/Filter.svg</file>
+        <file alias="Sort">Resource/Icon/Sort.svg</file>
+        <file alias="FullScreen">Resource/Icon/FullScreen.svg</file>
+        <file alias="Volume">Resource/Icon/Volume.svg</file>
+    </qresource>
+</RCC>
